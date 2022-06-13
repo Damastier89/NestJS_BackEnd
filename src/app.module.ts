@@ -6,6 +6,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './users/users.model';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { AuthModule } from './auth/auth.module';
       autoLoadModels: true, // для того чтобы sequelize создавал таблици, на основе заданных моделей 
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    PostsModule
   ],
   controllers: [],
   providers: [],

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -14,7 +14,7 @@ export class UsersController {
 
   @ApiOperation({summary: 'Получение всех пользователей'})
   @ApiResponse({status: 200, type: [User]})
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get()
   public getAllUsers(): Promise<User[]> {
     return this.userService.getAllUsers();
@@ -42,6 +42,14 @@ export class UsersController {
   @Delete('/user/:id')
   public removeUserById(@Param('id') id: string): Promise<number> {
     return this.userService.removeUserById(id);
+  }
+
+  @ApiOperation({summary: 'Редактирование пользователя'})
+  @ApiResponse({status: 200, type: User})
+  // @UseGuards(JwtAuthGuard)
+  @Patch('/user/:id')
+  public updateUser(@Param('id') id: string, @Body() userDto: CreateUserDto) {
+    return this.userService.updateUser(id, userDto);
   }
 
 }

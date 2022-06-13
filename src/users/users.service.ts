@@ -30,6 +30,11 @@ export class UsersService {
     const removeUserId = await this.userRepositoty.destroy({where: {id}});
     return removeUserId;
   }
+  // TODO 
+  public async updateUser(id: string, userDto: CreateUserDto): Promise<any> {
+    const updateUser = await this.userRepositoty
+    return updateUser;
+  }
 
   public async getUserByEmail(email: string): Promise<User> {
     const user = await this.userRepositoty.findOne({where: {email}, include: {all: true}});
