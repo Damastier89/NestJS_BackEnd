@@ -5,9 +5,6 @@ import { SequelizeModule } from '@nestjs/sequelize';
 // import { ProductsModule } from './_test/products.module';
 import { User } from './users/users.model';
 import { UsersModule } from './users/users.module';
-import { RolesModule } from './roles/roles.module';
-import { Role } from './roles/roles.model';
-import { UserRoles } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -22,11 +19,10 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles], // модели для ДБ
+      models: [User], // модели для ДБ
       autoLoadModels: true, // для того чтобы sequelize создавал таблици, на основе заданных моделей 
     }),
     UsersModule,
-    RolesModule,
     AuthModule
   ],
   controllers: [],

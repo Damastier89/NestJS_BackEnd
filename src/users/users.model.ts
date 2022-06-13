@@ -1,9 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
 
-import { UserRoles } from "../roles/user-roles.model";
-import { Role } from "../roles/roles.model";
-
 interface UserCreationAttrs {
   email: string,
   password: string
@@ -18,7 +15,7 @@ export class User extends Model<User, UserCreationAttrs> {
     autoIncrement: true, // с каждым последующим записыванием  в базу поле будет инкреминтироваться
     primaryKey: true, // первичный ключ
   })
-  id: string;
+  id: number;
 
   @ApiProperty({example: 'exemple@mail.com', description: 'email'})
   @Column({type: DataType.STRING, unique: true, allowNull: false}) // allowNull - поле не может быть пустым
@@ -35,8 +32,4 @@ export class User extends Model<User, UserCreationAttrs> {
   @ApiProperty({example: 'За не цензурную речь', description: 'Причина блокировки'})
   @Column({type: DataType.BOOLEAN, allowNull: true})
   banReason: string;
-
-  // Связываем таблицу Users с Role (связь => многие ко многим)
-  @BelongsToMany(() => Role, () => UserRoles) 
-  roles: Role[];
 }

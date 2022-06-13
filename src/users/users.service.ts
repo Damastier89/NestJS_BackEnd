@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
-import { RolesService } from '../roles/roles.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './users.model';
 
@@ -10,13 +9,10 @@ export class UsersService {
 
   constructor(
     @InjectModel(User) private userRepositoty: typeof User,
-    private rolesService: RolesService,
   ) {}
 
   public async createUser(userDto: CreateUserDto): Promise<User> {
     const user = await this.userRepositoty.create(userDto);
-    const role = await this.rolesService.getRoleByValue("USER");
-    await user.$set('roles', [role.id])
     return user;
   }
 
@@ -25,13 +21,18 @@ export class UsersService {
     return users;
   }
 
-  public async getUserById(id: string) {
+  public async getUserById(id: string): Promise<User> {
     const userId = await this.userRepositoty.findOne({where: {id}});
     return userId;
   }
 
-  public async removeUserById(id: string) {
+  public async removeUserById(id: string): Promise<number> {
     const removeUserId = await this.userRepositoty.destroy({where: {id}});
     return removeUserId;
+  }
+
+  public async getUserByEmail(email: string): Promise<User> {
+    const user = await this.userRepositoty.findOne({where: {email}, include: {all: true}});
+    return user;
   }
 }
