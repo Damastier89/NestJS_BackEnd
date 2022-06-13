@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 
-// import { ProductsModule } from './_test/products.module';
 import { User } from './users/users.model';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
+import { Post } from './posts/posts.model';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -20,12 +21,13 @@ import { PostsModule } from './posts/posts.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User], // модели для ДБ
+      models: [User, Post], // модели для ДБ
       autoLoadModels: true, // для того чтобы sequelize создавал таблици, на основе заданных моделей 
     }),
     UsersModule,
     AuthModule,
-    PostsModule
+    PostsModule,
+    FilesModule
   ],
   controllers: [],
   providers: [],

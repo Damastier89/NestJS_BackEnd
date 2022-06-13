@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+
+import { Post } from "../posts/posts.model";
 
 interface UserCreationAttrs {
   email: string,
@@ -32,4 +34,7 @@ export class User extends Model<User, UserCreationAttrs> {
   @ApiProperty({example: 'За не цензурную речь', description: 'Причина блокировки'})
   @Column({type: DataType.BOOLEAN, allowNull: true})
   banReason: string;
+
+  @HasMany(() => Post)
+  posts: Post[];
 }
