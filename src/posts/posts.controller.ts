@@ -1,6 +1,5 @@
-import { Body, Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
@@ -13,9 +12,10 @@ export class PostsController {
     private postService: PostsService
   ) {}
 
-  @Post()
-  @UseInterceptors(FileInterceptor('image'))
-  public createPost(@Body() postDto: CreatePostDto, @UploadedFile() image) {
-    return this.postService.createPost(postDto, image);
+  @ApiOperation({summary: 'Создание поста'})
+  @ApiResponse({status: 200, type: Post})
+  @Post('/create-post')
+  public createPost(@Body() postDto: CreatePostDto) {
+    return this.postService.createPost(postDto);
   }
 }

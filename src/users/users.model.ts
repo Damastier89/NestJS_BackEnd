@@ -27,14 +27,6 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({type: DataType.STRING, allowNull: false})
   password: string;
 
-  @ApiProperty({example: 'true', description: 'Пользователь с флагом true заблокирован'})
-  @Column({type: DataType.BOOLEAN, defaultValue: false})
-  banned: boolean;
-
-  @ApiProperty({example: 'За не цензурную речь', description: 'Причина блокировки'})
-  @Column({type: DataType.BOOLEAN, allowNull: true})
-  banReason: string;
-
   @HasMany(() => Post)
   posts: Post[];
 }
