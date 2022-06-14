@@ -22,7 +22,7 @@ export class UsersController {
 
   @ApiOperation({summary: 'Получение пользователя по id'})
   @ApiResponse({status: 200, type: User})
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/user/:id')
   public getUserById (@Param('id') id: string): Promise<User> {
     return this.userService.getUserById(id);
@@ -30,7 +30,7 @@ export class UsersController {
 
   @ApiOperation({summary: 'Создание пользователя'})
   @ApiResponse({status: 200, type: User})
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('/create-user')
   public createUser(@Body() userDto: CreateUserDto): Promise<User> {
     return this.userService.createUser(userDto);
@@ -38,7 +38,7 @@ export class UsersController {
 
   @ApiOperation({summary: 'Удаление пользователя по id'})
   @ApiResponse({status: 200, type: User})
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete('/user/:id')
   public removeUserById(@Param('id') id: string): Promise<number> {
     return this.userService.removeUserById(id);
@@ -46,7 +46,7 @@ export class UsersController {
 
   @ApiOperation({summary: 'Редактирование пользователя'})
   @ApiResponse({status: 200, type: User})
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch('/user/:id')
   public updateUser(@Param('id') id: string, @Body() userDto: CreateUserDto) {
     return this.userService.updateUser(id, userDto);
